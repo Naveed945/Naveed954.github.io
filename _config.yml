@@ -1,0 +1,51 @@
+# Jekyll Configuration for GitHub Pages
+
+# Site settings
+title: Naveed Ahmed Mohammed
+description: Senior Software Engineer & AI/ML Specialist | Full-Stack Product Engineer
+url: https://naveedmd954.github.io
+author: Naveed Ahmed Mohammed
+email: naveedmd954@gmail.com
+
+# Build settings
+theme: null  # We're using custom HTML/CSS, no Jekyll theme
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Exclude files
+exclude:
+  - .gitignore
+  - README.md
+  - LICENSE
+  - CNAME
+
+# Permalink format
+permalink: /:title/
+
+# Collections
+collections:
+  projects:
+    output: true
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+# Analytics (optional - uncomment to enable)
+# google_analytics: UA-XXXXXXXXX-X
+
+# SEO settings
+social:
+  name: Naveed Ahmed Mohammed
+  links:
+    - https://github.com/naveedmd954
+    - https://linkedin.com/in/naveed-mohammed-51a431181
+
+webmaster_verifications:
+  google: verification_code
+  bing: verification_code
