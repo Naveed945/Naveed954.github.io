@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explaining Neural Networks in Plain Language | Naveed Ahmed Mohammed</title>
+    <meta name="description" content="Plain-language explanation of neural networks paired with a deep learning knowledge check.">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2D1B69;
+            --secondary: #5A189A;
+            --accent: #9D4EDD;
+            --light-bg: #F8F7FC;
+            --card-bg: #FFFFFF;
+            --text-dark: #2D3748;
+            --text-light: #718096;
+            --border-light: #E2E8F0;
+            --success: #48BB78;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* ===== HEADER & NAV ===== */
+        header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* ===== ARTICLE HERO ===== */
+        .article-hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 70px 20px 60px;
+            text-align: center;
+        }
+
+        .breadcrumb {
+            max-width: 900px;
+            margin: 0 auto 20px;
+            text-align: left;
+        }
+
+        .breadcrumb a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: white;
+        }
+
+        .article-hero .eyebrow {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+        }
+
+        .article-hero h1 {
+            font-size: 40px;
+            max-width: 850px;
+            margin: 0 auto;
+            line-height: 1.25;
+        }
+
+        .article-hero .subtitle {
+            margin-top: 18px;
+            font-size: 17px;
+            color: rgba(255,255,255,0.85);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== ARTICLE BODY ===== */
+        .article-wrap {
+            max-width: 900px;
+            margin: -30px auto 80px;
+            padding: 0 20px;
+        }
+
+        .article-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 50px 55px;
+            box-shadow: 0 10px 40px rgba(45, 27, 105, 0.08);
+        }
+
+        .article-card h1 {
+            color: var(--primary);
+            font-size: 30px;
+            margin: 40px 0 20px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .article-card h1:first-child {
+            margin-top: 0;
+        }
+
+        .article-card h2 {
+            color: var(--primary);
+            font-size: 24px;
+            margin: 40px 0 18px;
+        }
+
+        .article-card h3 {
+            color: var(--secondary);
+            font-size: 19px;
+            margin: 28px 0 12px;
+        }
+
+        .article-card h4 {
+            color: var(--secondary);
+            font-size: 16px;
+            margin: 22px 0 10px;
+        }
+
+        .article-card p {
+            color: var(--text-dark);
+            font-size: 16px;
+            line-height: 1.85;
+            margin-bottom: 18px;
+        }
+
+        .article-card ul,
+        .article-card ol {
+            margin: 0 0 20px 24px;
+            color: var(--text-dark);
+            font-size: 16px;
+            line-height: 1.85;
+        }
+
+        .article-card li {
+            margin-bottom: 8px;
+        }
+
+        .article-card strong {
+            color: var(--primary);
+        }
+
+        .article-card a {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .article-card hr {
+            border: none;
+            border-top: 1px solid var(--border-light);
+            margin: 36px 0;
+        }
+
+        .article-card blockquote {
+            border-left: 4px solid var(--accent);
+            background: var(--light-bg);
+            padding: 18px 24px;
+            margin: 24px 0;
+            border-radius: 6px;
+            color: var(--text-dark);
+            font-style: italic;
+        }
+
+        .article-card blockquote p:last-child {
+            margin-bottom: 0;
+        }
+
+        .article-card code {
+            background: var(--light-bg);
+            color: var(--secondary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        }
+
+        .article-card pre {
+            background: var(--light-bg);
+            padding: 18px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .article-card pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .article-card table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 14px;
+        }
+
+        .article-card th {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: left;
+            padding: 12px 16px;
+        }
+
+        .article-card th:first-child {
+            border-top-left-radius: 8px;
+        }
+
+        .article-card th:last-child {
+            border-top-right-radius: 8px;
+        }
+
+        .article-card td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-dark);
+        }
+
+        .article-card tr:nth-child(even) td {
+            background: var(--light-bg);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 40px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .back-link:hover {
+            gap: 12px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-light);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 15px;
+                font-size: 12px;
+            }
+
+            .article-hero h1 {
+                font-size: 28px;
+            }
+
+            .article-card {
+                padding: 32px 22px;
+            }
+
+            .article-card table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">NAM</a>
+            <ul>
+                <li><a href="index.html#hero">Home</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#artifacts">Artifacts</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ARTICLE HERO -->
+    <section class="article-hero">
+        <div class="breadcrumb">
+            <a href="index.html#artifacts">&larr; Back to Portfolio</a>
+        </div>
+        <span class="eyebrow">Artifact 3</span>
+        <h1>Explaining Neural Networks in Plain Language</h1>
+        <p class="subtitle">A discussion post and knowledge check translating how neural networks learn into an accessible explanation.</p>
+    </section>
+
+    <!-- ARTICLE BODY -->
+    <div class="article-wrap">
+        <article class="article-card">
+            <p><strong>Title:</strong> Explaining Neural Networks in Plain Language — A Discussion Post and Knowledge Check</p>
+            <p><strong>Objective:</strong> To demonstrate the ability to translate a complex AI/ML concept (how neural networks learn) into an explanation accessible to a non-technical audience, while also validating my grasp of the underlying technical concepts through a formal knowledge assessment.</p>
+            <p><strong>Process:</strong> I started by identifying the core mechanics of a neural network — neurons, weights, layers, and the training loop — and then worked backward to find an everyday analogy (a child learning to recognize a dog) that captured the same logic without jargon. I built the explanation in stages: a relatable scenario first, then the technical mapping, then a connection to change leadership and how employees adapt to AI-driven change. Separately, I completed a 15-question knowledge check covering neural network architecture, training mechanics, and historical foundations, which tested whether my conceptual understanding held up against precise technical definitions. For this portfolio, I revised both pieces, adding a comparison table and structured reflection, and combined them into a single artifact to show both communication skill and technical accuracy side by side.</p>
+            <p><strong>Tools:</strong> Markdown for formatting and publishing to GitHub Pages, course discussion boards and the LMS quiz tool for the original coursework, and GitHub for hosting and version control of the portfolio itself.</p>
+            <p><strong>Value Proposition:</strong> This artifact shows that I can do more than pass a technical assessment — I can take that same knowledge and make it usable for people who don't have a technical background, like a manager or client who needs to understand what a model is doing without needing to understand the math. That combination of technical grounding and clear communication is something I'd want any employer evaluating my AI/ML skills to see.</p>
+            <hr />
+            <h2 id="part-a-plain-language-explanation">Part A: Plain-Language Explanation</h2>
+            <p><em>Original context: A discussion post responding to the prompt of explaining neural networks simply.</em></p>
+            <p>Imagine you're teaching a young child to recognize a dog. You don't hand them a dictionary definition. Instead, you point at dozens of different dogs — big ones, small ones, fluffy ones, spotted ones — and say "dog" each time. Eventually, without ever memorizing a rulebook, the child just knows what a dog looks like, even a breed they've never seen before.</p>
+            <p>A neural network learns the same way.</p>
+            <p>Think of it as a network of tiny decision-makers, called "neurons," stacked in layers:</p>
+            <ul>
+            <li>The <strong>input layer</strong> looks at the raw information (like the pixels of a photo).</li>
+            <li>The <strong>hidden layers</strong> in the middle each look for small patterns — one layer might notice edges and curves, the next might notice shapes like ears or a snout, and so on, building up in complexity.</li>
+            <li>The <strong>output layer</strong> makes the final call: "dog" or "not a dog."</li>
+            </ul>
+            <p>Here's the key part: at first, the network is terrible at this. It guesses randomly. But every time it's wrong, it goes back and slightly adjusts itself, like tightening or loosening thousands of tiny dials, so it's a little more accurate next time. Show it enough examples — thousands, sometimes millions — and it keeps tuning those dials until it gets remarkably good at telling dogs from cats, spam from real emails, or fraud from a real transaction.</p>
+            <p>That's really it. A neural network doesn't "think" the way we do. It's a pattern-matching system that keeps adjusting itself based on feedback until its guesses become reliable.</p>
+            <p><strong>Why this matters for change leadership:</strong> just like a neural network needs repeated exposure and feedback to learn, employees adapting to AI-driven change need the same — repeated, digestible exposure to new concepts, real examples, and a feedback loop to check understanding, rather than a single info-dump.</p>
+            <p><em>Tool disclosure: I used Claude (Anthropic) to help draft and refine this explanation, applying the chunking, storytelling, and progressive disclosure principles from this week's lesson.</em></p>
+            <p><strong>Instructional design choices I applied:</strong></p>
+            <ul>
+            <li><strong>Chunking</strong> — breaking the explanation into neuron → layers → training loop</li>
+            <li><strong>Progressive disclosure</strong> — leading with the dog-recognition example before any technical terms</li>
+            <li><strong>Relevance and context</strong> — tying the concept to change leadership and how employees adapt to AI-driven change</li>
+            <li><strong>Storytelling</strong> — using the child-learning-a-dog narrative to make an abstract process feel familiar</li>
+            </ul>
+            <p>These choices weren't accidental. They draw directly on principles I learned in this course around communication in change leadership: breaking complex ideas into digestible pieces, adapting the message to the audience, and reinforcing key points so they move from short-term to long-term understanding. Explaining a neural network to a non-technical coworker is, in a small way, its own kind of change leadership — asking someone to trust and adopt a new, unfamiliar way of thinking about a problem. The same techniques that help a manager communicate organizational change (tailored messaging, storytelling, progressive disclosure) are what make a technical concept land with someone who has no reason to already believe it matters to them.</p>
+            <hr />
+            <h2 id="part-b-deep-learning-knowledge-check">Part B: Deep Learning Knowledge Check</h2>
+            <p><em>Original context: A 15-question quiz assessing foundational deep learning concepts, covering neural network architecture, training mechanics, and historical context.</em></p>
+            <p>Selected topics covered in this assessment:</p>
+            <table>
+            <thead>
+            <tr>
+            <th>Concept</th>
+            <th>What I Demonstrated</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            <td>GPU acceleration</td>
+            <td>Understanding why specialized hardware matters for neural network computation</td>
+            </tr>
+            <tr>
+            <td>RNNs vs. CNNs</td>
+            <td>Matching architecture type to data type (sequential vs. spatial)</td>
+            </tr>
+            <tr>
+            <td>Historical foundations</td>
+            <td>Recognizing the statistical roots of ML (e.g., Legendre's least squares method)</td>
+            </tr>
+            <tr>
+            <td>Neurons, layers, activation functions</td>
+            <td>Core building blocks of network architecture</td>
+            </tr>
+            <tr>
+            <td>Loss functions</td>
+            <td>How networks quantify and correct error during training</td>
+            </tr>
+            <tr>
+            <td>Overfitting</td>
+            <td>A key training challenge and how to recognize it</td>
+            </tr>
+            <tr>
+            <td>Interpretability</td>
+            <td>Why deep learning models are often considered "black boxes"</td>
+            </tr>
+            <tr>
+            <td>Feature extraction</td>
+            <td>A key differentiator between deep learning and traditional ML</td>
+            </tr>
+            </tbody>
+            </table>
+            <p>I scored 30/30 (100%) on this assessment, reflecting a solid grasp of both the technical vocabulary and the conceptual "why" behind how these models function — the same conceptual foundation that made the plain-language explanation above possible.</p>
+            <hr />
+            <a href="index.html#artifacts" class="back-link">&larr; Back to all Artifacts</a>
+        </article>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2024 Naveed Ahmed Mohammed. Built with care. Hosted on GitHub Pages.</p>
+    </footer>
+</body>
+</html>

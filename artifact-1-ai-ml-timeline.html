@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Infrastructure Behind Intelligence | Naveed Ahmed Mohammed</title>
+    <meta name="description" content="A researched timeline of AI/ML history, from the Turing Test to the Transformer-driven generative AI boom.">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2D1B69;
+            --secondary: #5A189A;
+            --accent: #9D4EDD;
+            --light-bg: #F8F7FC;
+            --card-bg: #FFFFFF;
+            --text-dark: #2D3748;
+            --text-light: #718096;
+            --border-light: #E2E8F0;
+            --success: #48BB78;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* ===== HEADER & NAV ===== */
+        header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* ===== ARTICLE HERO ===== */
+        .article-hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 70px 20px 60px;
+            text-align: center;
+        }
+
+        .breadcrumb {
+            max-width: 900px;
+            margin: 0 auto 20px;
+            text-align: left;
+        }
+
+        .breadcrumb a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: white;
+        }
+
+        .article-hero .eyebrow {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+        }
+
+        .article-hero h1 {
+            font-size: 40px;
+            max-width: 850px;
+            margin: 0 auto;
+            line-height: 1.25;
+        }
+
+        .article-hero .subtitle {
+            margin-top: 18px;
+            font-size: 17px;
+            color: rgba(255,255,255,0.85);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== ARTICLE BODY ===== */
+        .article-wrap {
+            max-width: 900px;
+            margin: -30px auto 80px;
+            padding: 0 20px;
+        }
+
+        .article-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 50px 55px;
+            box-shadow: 0 10px 40px rgba(45, 27, 105, 0.08);
+        }
+
+        .article-card h1 {
+            color: var(--primary);
+            font-size: 30px;
+            margin: 40px 0 20px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .article-card h1:first-child {
+            margin-top: 0;
+        }
+
+        .article-card h2 {
+            color: var(--primary);
+            font-size: 24px;
+            margin: 40px 0 18px;
+        }
+
+        .article-card h3 {
+            color: var(--secondary);
+            font-size: 19px;
+            margin: 28px 0 12px;
+        }
+
+        .article-card h4 {
+            color: var(--secondary);
+            font-size: 16px;
+            margin: 22px 0 10px;
+        }
+
+        .article-card p {
+            color: var(--text-dark);
+            font-size: 16px;
+            line-height: 1.85;
+            margin-bottom: 18px;
+        }
+
+        .article-card ul,
+        .article-card ol {
+            margin: 0 0 20px 24px;
+            color: var(--text-dark);
+            font-size: 16px;
+            line-height: 1.85;
+        }
+
+        .article-card li {
+            margin-bottom: 8px;
+        }
+
+        .article-card strong {
+            color: var(--primary);
+        }
+
+        .article-card a {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .article-card hr {
+            border: none;
+            border-top: 1px solid var(--border-light);
+            margin: 36px 0;
+        }
+
+        .article-card blockquote {
+            border-left: 4px solid var(--accent);
+            background: var(--light-bg);
+            padding: 18px 24px;
+            margin: 24px 0;
+            border-radius: 6px;
+            color: var(--text-dark);
+            font-style: italic;
+        }
+
+        .article-card blockquote p:last-child {
+            margin-bottom: 0;
+        }
+
+        .article-card code {
+            background: var(--light-bg);
+            color: var(--secondary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        }
+
+        .article-card pre {
+            background: var(--light-bg);
+            padding: 18px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .article-card pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .article-card table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 14px;
+        }
+
+        .article-card th {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: left;
+            padding: 12px 16px;
+        }
+
+        .article-card th:first-child {
+            border-top-left-radius: 8px;
+        }
+
+        .article-card th:last-child {
+            border-top-right-radius: 8px;
+        }
+
+        .article-card td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-dark);
+        }
+
+        .article-card tr:nth-child(even) td {
+            background: var(--light-bg);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 40px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .back-link:hover {
+            gap: 12px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-light);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 15px;
+                font-size: 12px;
+            }
+
+            .article-hero h1 {
+                font-size: 28px;
+            }
+
+            .article-card {
+                padding: 32px 22px;
+            }
+
+            .article-card table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">NAM</a>
+            <ul>
+                <li><a href="index.html#hero">Home</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#artifacts">Artifacts</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ARTICLE HERO -->
+    <section class="article-hero">
+        <div class="breadcrumb">
+            <a href="index.html#artifacts">&larr; Back to Portfolio</a>
+        </div>
+        <span class="eyebrow">Artifact 1</span>
+        <h1>The Infrastructure Behind Intelligence</h1>
+        <p class="subtitle">An AI/ML evolution timeline tracing the field from its 1950s theoretical origins to the current generative AI era.</p>
+    </section>
+
+    <!-- ARTICLE BODY -->
+    <div class="article-wrap">
+        <article class="article-card">
+            <h3 id="title">Title</h3>
+            <p><strong>The Infrastructure Behind Intelligence: An AI/ML Evolution Timeline</strong></p>
+            <h3 id="introduction">Introduction</h3>
+            <p>As I complete my MS in AI &amp; Data Analytics and continue building production AI/ML systems, I wanted to ground my work in a clear understanding of how the field actually got here. This artifact is a researched timeline tracing AI from its theoretical origins in the 1950s to the current generative AI era.</p>
+            <h3 id="description">Description</h3>
+            <p>The timeline maps AI's evolution across five phases: its founding (Turing Test, Dartmouth Conference), two "AI winters" where progress stalled, the return to steady progress (Deep Blue), the deep learning inflection point (AlexNet, 2012), and the current Transformer-driven generative AI boom. Rather than a straight line of progress, the research shows a field that stalled twice and then accelerated sharply once specific infrastructure became available.</p>
+            <h3 id="objective">Objective</h3>
+            <p>To identify the actual drivers of AI progress — separating moments where new <em>ideas</em> mattered from moments where new <em>infrastructure</em> (compute, data, hardware) unlocked ideas that already existed — and to apply that lens to how I evaluate and build AI/ML systems today.</p>
+            <h3 id="process">Process</h3>
+            <p>I researched primary milestones across academic and industry sources, cross-referenced dates and claims across multiple sources, and organized findings chronologically to identify inflection points. I paid particular attention to <em>why</em> each AI winter ended and why 2012 (AlexNet) marked a turning point rather than an earlier or later date — the answer being that Nvidia's gaming GPUs, originally built for an unrelated purpose, turned out to be well-suited to training neural networks that had existed in theory for years.</p>
+            <p><strong>Key milestones:</strong></p>
+            <table>
+            <thead>
+            <tr>
+            <th style="text-align: left;">Era</th>
+            <th style="text-align: left;">Milestone</th>
+            <th style="text-align: left;">Significance</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            <td style="text-align: left;">1950</td>
+            <td style="text-align: left;">Turing proposes the Turing Test</td>
+            <td style="text-align: left;">Founding question of the field</td>
+            </tr>
+            <tr>
+            <td style="text-align: left;">1956</td>
+            <td style="text-align: left;">Dartmouth Conference</td>
+            <td style="text-align: left;">"Artificial Intelligence" formally named</td>
+            </tr>
+            <tr>
+            <td style="text-align: left;">1974–1980</td>
+            <td style="text-align: left;">First AI Winter</td>
+            <td style="text-align: left;">Overpromised rule-based systems lose funding</td>
+            </tr>
+            <tr>
+            <td style="text-align: left;">1987–1993</td>
+            <td style="text-align: left;">Second AI Winter</td>
+            <td style="text-align: left;">Expert systems prove too rigid/costly to scale</td>
+            </tr>
+            <tr>
+            <td style="text-align: left;">1997</td>
+            <td style="text-align: left;">Deep Blue beats Kasparov</td>
+            <td style="text-align: left;">First major symbolic AI win over a human champion</td>
+            </tr>
+            <tr>
+            <td style="text-align: left;">2012</td>
+            <td style="text-align: left;">AlexNet wins ImageNet</td>
+            <td style="text-align: left;">GPUs unlock deep learning at scale — the real inflection point</td>
+            </tr>
+            <tr>
+            <td style="text-align: left;">2017</td>
+            <td style="text-align: left;">Transformer architecture published</td>
+            <td style="text-align: left;">Becomes the backbone of GPT, Claude, and modern LLMs</td>
+            </tr>
+            <tr>
+            <td style="text-align: left;">2022+</td>
+            <td style="text-align: left;">Generative AI goes mainstream</td>
+            <td style="text-align: left;">Tools like ChatGPT reach general consumers</td>
+            </tr>
+            </tbody>
+            </table>
+            <h3 id="tools-and-technologies-used">Tools and Technologies Used</h3>
+            <p>Research and synthesis (Our World in Data, IEEE Computer Society), timeline visualization, and comparative historical analysis.</p>
+            <h3 id="value-proposition">Value Proposition</h3>
+            <p><strong>Unique Value:</strong> Most engineers can name AI milestones; fewer can articulate <em>why</em> progress stalled twice and then compounded rapidly. This artifact demonstrates that I don't just use AI/ML tools — I understand the structural conditions that make them possible, which shapes how I scope and build AI systems.</p>
+            <p><strong>Relevance:</strong> For a hiring manager evaluating AI/ML or software engineering candidates, this signals a builder who thinks about infrastructure and timing, not just algorithms — directly relevant to my applied work with LLM APIs, RAG pipelines, and tool-calling agents, where the same pattern holds: the ideas are often not new, but the infrastructure to run them well finally is.</p>
+            <h3 id="references">References</h3>
+            <p>Our World in Data; IEEE Computer Society.</p>
+            <a href="index.html#artifacts" class="back-link">&larr; Back to all Artifacts</a>
+        </article>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2024 Naveed Ahmed Mohammed. Built with care. Hosted on GitHub Pages.</p>
+    </footer>
+</body>
+</html>

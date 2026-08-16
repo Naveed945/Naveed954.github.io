@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadership, Data Challenges, and AI Bias Mitigation | Naveed Ahmed Mohammed</title>
+    <meta name="description" content="Leadership communication, ML data challenges, and navigating AI bias mitigation.">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2D1B69;
+            --secondary: #5A189A;
+            --accent: #9D4EDD;
+            --light-bg: #F8F7FC;
+            --card-bg: #FFFFFF;
+            --text-dark: #2D3748;
+            --text-light: #718096;
+            --border-light: #E2E8F0;
+            --success: #48BB78;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* ===== HEADER & NAV ===== */
+        header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* ===== ARTICLE HERO ===== */
+        .article-hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 70px 20px 60px;
+            text-align: center;
+        }
+
+        .breadcrumb {
+            max-width: 900px;
+            margin: 0 auto 20px;
+            text-align: left;
+        }
+
+        .breadcrumb a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: white;
+        }
+
+        .article-hero .eyebrow {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+        }
+
+        .article-hero h1 {
+            font-size: 40px;
+            max-width: 850px;
+            margin: 0 auto;
+            line-height: 1.25;
+        }
+
+        .article-hero .subtitle {
+            margin-top: 18px;
+            font-size: 17px;
+            color: rgba(255,255,255,0.85);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== ARTICLE BODY ===== */
+        .article-wrap {
+            max-width: 900px;
+            margin: -30px auto 80px;
+            padding: 0 20px;
+        }
+
+        .article-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 50px 55px;
+            box-shadow: 0 10px 40px rgba(45, 27, 105, 0.08);
+        }
+
+        .article-card h1 {
+            color: var(--primary);
+            font-size: 30px;
+            margin: 40px 0 20px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .article-card h1:first-child {
+            margin-top: 0;
+        }
+
+        .article-card h2 {
+            color: var(--primary);
+            font-size: 24px;
+            margin: 40px 0 18px;
+        }
+
+        .article-card h3 {
+            color: var(--secondary);
+            font-size: 19px;
+            margin: 28px 0 12px;
+        }
+
+        .article-card h4 {
+            color: var(--secondary);
+            font-size: 16px;
+            margin: 22px 0 10px;
+        }
+
+        .article-card p {
+            color: var(--text-dark);
+            font-size: 16px;
+            line-height: 1.85;
+            margin-bottom: 18px;
+        }
+
+        .article-card ul,
+        .article-card ol {
+            margin: 0 0 20px 24px;
+            color: var(--text-dark);
+            font-size: 16px;
+            line-height: 1.85;
+        }
+
+        .article-card li {
+            margin-bottom: 8px;
+        }
+
+        .article-card strong {
+            color: var(--primary);
+        }
+
+        .article-card a {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .article-card hr {
+            border: none;
+            border-top: 1px solid var(--border-light);
+            margin: 36px 0;
+        }
+
+        .article-card blockquote {
+            border-left: 4px solid var(--accent);
+            background: var(--light-bg);
+            padding: 18px 24px;
+            margin: 24px 0;
+            border-radius: 6px;
+            color: var(--text-dark);
+            font-style: italic;
+        }
+
+        .article-card blockquote p:last-child {
+            margin-bottom: 0;
+        }
+
+        .article-card code {
+            background: var(--light-bg);
+            color: var(--secondary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        }
+
+        .article-card pre {
+            background: var(--light-bg);
+            padding: 18px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .article-card pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .article-card table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 14px;
+        }
+
+        .article-card th {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: left;
+            padding: 12px 16px;
+        }
+
+        .article-card th:first-child {
+            border-top-left-radius: 8px;
+        }
+
+        .article-card th:last-child {
+            border-top-right-radius: 8px;
+        }
+
+        .article-card td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-dark);
+        }
+
+        .article-card tr:nth-child(even) td {
+            background: var(--light-bg);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 40px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .back-link:hover {
+            gap: 12px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-light);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 15px;
+                font-size: 12px;
+            }
+
+            .article-hero h1 {
+                font-size: 28px;
+            }
+
+            .article-card {
+                padding: 32px 22px;
+            }
+
+            .article-card table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">NAM</a>
+            <ul>
+                <li><a href="index.html#hero">Home</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#artifacts">Artifacts</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ARTICLE HERO -->
+    <section class="article-hero">
+        <div class="breadcrumb">
+            <a href="index.html#artifacts">&larr; Back to Portfolio</a>
+        </div>
+        <span class="eyebrow">Artifact 4</span>
+        <h1>Leadership, Data Challenges, and AI Bias Mitigation</h1>
+        <p class="subtitle">Bridging technical ML data governance with biblically grounded executive leadership principles.</p>
+    </section>
+
+    <!-- ARTICLE BODY -->
+    <div class="article-wrap">
+        <article class="article-card">
+            <hr />
+            <h2 id="1-title">1. Title</h2>
+            <p><strong>Artifact 4: Leadership Communication, ML Data Challenges, and Navigating AI Bias</strong></p>
+            <hr />
+            <h2 id="2-objective">2. Objective</h2>
+            <p>To bridge technical machine learning data governance with executive leadership principles. This artifact demonstrates how to diagnose and resolve production ML data issues (such as data drift, class imbalance, and missingness), establish fairness-by-design frameworks for human and algorithmic bias, and apply biblically grounded leadership strategies to ensure organizational vision alignment and clear communication.</p>
+            <hr />
+            <h2 id="3-process">3. Process</h2>
+            <h3 id="phase-a-biblical-leadership-communication-framework">Phase A: Biblical Leadership &amp; Communication Framework</h3>
+            <ul>
+            <li><strong>Vision Alignment:</strong> Standardized multi-channel communication strategies (interactive Q&amp;A, documented acceptance criteria, active listening, and visual workflows) to eliminate ambiguity in technical teams.</li>
+            <li><strong>Problem-Solving &amp; Conflict Resolution:</strong> Applied scriptural principles to resolve team miscommunication, establishing psychological safety so team members can clarify expectations early.</li>
+            </ul>
+            <h3 id="phase-b-diagnostic-strategy-for-machine-learning-data-challenges">Phase B: Diagnostic Strategy for Machine Learning Data Challenges</h3>
+            <ul>
+            <li><strong>Systematic Pipeline Analysis:</strong> Evaluated 14 core data challenges in ML pipelines (e.g., data availability, labeling bottlenecks, real-time streaming, interoperability, and missing data).</li>
+            <li><strong>Drift &amp; Degradation Metrics:</strong> Applied mathematical drift diagnostics—utilizing Population Stability Index (PSI) and Kolmogorov-Smirnov (KS) tests for covariate shift $P(X)$, and residual breakdown for concept drift $P(Y|X)$.</li>
+            <li><strong>ROI &amp; Financial Cost-Matrix:</strong> Developed a financial decision framework converting prediction error (MAE) into business loss (wasted retention budgets vs. churned high-value customers) to justify automated retraining triggers.</li>
+            </ul>
+            <h3 id="phase-c-human-algorithmic-bias-mitigation">Phase C: Human &amp; Algorithmic Bias Mitigation</h3>
+            <ul>
+            <li><strong>Personal Value Statement:</strong> Crafted an ethical leadership statement prioritizing empathy, transparency, scientific rigor, and accountability in AI deployment.</li>
+            <li><strong>Field-Specific Actions:</strong> Established bias-mitigation protocols spanning dataset audits, adversarial validation, and inclusive team practices.</li>
+            </ul>
+            <hr />
+            <h2 id="4-tools-technologies-used">4. Tools &amp; Technologies Used</h2>
+            <ul>
+            <li><strong>Data Drift &amp; Monitoring:</strong> Population Stability Index (PSI), Kolmogorov-Smirnov (KS) Test, Adversarial Validation.</li>
+            <li><strong>Fairness &amp; Bias Frameworks:</strong> Fairlearn, AIF360, Subgroup Disparate Impact Analysis.</li>
+            <li><strong>Machine Learning Frameworks:</strong> XGBoost, LightGBM, Scikit-Learn (class weighting via <code>scale_pos_weight</code>, MICE/KNN imputation).</li>
+            <li><strong>Documentation &amp; Portfolio Hosting:</strong> Markdown, Git/GitHub Pages, HTML/PDF Generation.</li>
+            </ul>
+            <hr />
+            <h2 id="5-value-proposition">5. Value Proposition</h2>
+            <ul>
+            <li><strong>Financial Protection:</strong> Prevents revenue leaks by connecting statistical error metrics directly to business decision boundaries, ensuring model retraining is triggered only when ROI is positive.</li>
+            <li><strong>Risk Reduction:</strong> Reduces legal, regulatory (GDPR/HIPAA), and ethical risks by embedding fairness audits and bias mitigation directly into the ML deployment pipeline.</li>
+            <li><strong>Operational Efficiency:</strong> Minimizes team miscommunication and redundant work through structured, transparent leadership communication frameworks.</li>
+            </ul>
+            <hr />
+            <h2 id="6-clear-professional-evidence">6. Clear &amp; Professional Evidence</h2>
+            <h3 id="a-personal-value-statement">A. Personal Value Statement</h3>
+            <blockquote>
+            <p><em>"In technology development and leadership, human bias—whether cognitive, historical, or algorithmic—can perpetuate unfairness and distort decision-making. My core value is to lead with empathy, transparency, and scientific rigor, ensuring that AI-driven solutions and organizational cultures are inclusive, ethically grounded, and held accountable."</em></p>
+            </blockquote>
+            <h3 id="b-strategic-bias-governance-action-plan">B. Strategic Bias &amp; Governance Action Plan</h3>
+            <ol>
+            <li><strong>Awareness &amp; Education:</strong> Conduct regular interactive workshops on cognitive biases (e.g., confirmation bias, availability heuristic) and their impact on data collection and labeling.</li>
+            <li><strong>Fairness-by-Design:</strong> Integrate bias-detection frameworks (e.g., Fairlearn, AIF360) directly into the ML CI/CD evaluation pipeline.</li>
+            <li><strong>Inclusive Governance:</strong> Audit training sets across demographic slices and involve cross-functional domain experts during problem definition.</li>
+            </ol>
+            <h3 id="c-ml-pipeline-vulnerabilities-remediation-matrix">C. ML Pipeline Vulnerabilities &amp; Remediation Matrix</h3>
+            <table>
+            <thead>
+            <tr>
+            <th style="text-align: left;">Challenge</th>
+            <th style="text-align: left;">Impact on Model</th>
+            <th style="text-align: left;">Recommended Remediation</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            <td style="text-align: left;"><strong>Missing Data (MCAR/MAR)</strong></td>
+            <td style="text-align: left;">Reduced sample size, biased parameters</td>
+            <td style="text-align: left;">Deterministic feature calculation or MICE/KNN Imputation</td>
+            </tr>
+            <tr>
+            <td style="text-align: left;"><strong>Class Imbalance (0.5% Fraud)</strong></td>
+            <td style="text-align: left;">Poor minority-class recall</td>
+            <td style="text-align: left;">Loss-weighting (<code>scale_pos_weight</code>), PR-AUC optimization, Cost-matrix thresholding</td>
+            </tr>
+            <tr>
+            <td style="text-align: left;"><strong>Data Drift $P(X)$</strong></td>
+            <td style="text-align: left;">Degradation due to new user distributions</td>
+            <td style="text-align: left;">Feature-level PSI monitoring, sliding-window retraining</td>
+            </tr>
+            <tr>
+            <td style="text-align: left;">**Concept Drift $P(Y</td>
+            <td style="text-align: left;">X)$**</td>
+            <td style="text-align: left;">Model outputs become invalid over time</td>
+            </tr>
+            </tbody>
+            </table>
+            <hr />
+            <h2 id="7-relevance-to-course-objectives-critical-reflection">7. Relevance to Course Objectives &amp; Critical Reflection</h2>
+            <h3 id="alignment-with-course-learning-outcomes">Alignment with Course Learning Outcomes</h3>
+            <ul>
+            <li><strong>Outcome 1 (Leadership Communication):</strong> Identified biblical examples of clear communication and applied structured strategies to resolve team confusion and align visions.</li>
+            <li><strong>Outcome 2 (Data Challenges in ML):</strong> Outlined and addressed 14 major data challenges associated with training, deploying, and maintaining production ML systems.</li>
+            <li><strong>Outcome 3 (Navigating Human Bias):</strong> Formulated field-specific strategies to identify, measure, and mitigate cognitive and algorithmic bias in AI integration.</li>
+            </ul>
+            <h2 id="_1"></h2>
+            <a href="index.html#artifacts" class="back-link">&larr; Back to all Artifacts</a>
+        </article>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2024 Naveed Ahmed Mohammed. Built with care. Hosted on GitHub Pages.</p>
+    </footer>
+</body>
+</html>
