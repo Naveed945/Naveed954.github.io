@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>From Restoration to Responsibility | Naveed Ahmed Mohammed</title>
+    <meta name="description" content="Ethical and transformational leadership in AI/ML, connecting biblical restoration, an AI security incident analysis, and a personal responsible-AI leadership framework.">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2D1B69;
+            --secondary: #5A189A;
+            --accent: #9D4EDD;
+            --light-bg: #F8F7FC;
+            --card-bg: #FFFFFF;
+            --text-dark: #2D3748;
+            --text-light: #718096;
+            --border-light: #E2E8F0;
+            --success: #48BB78;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* ===== HEADER & NAV ===== */
+        header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* ===== ARTICLE HERO ===== */
+        .article-hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 70px 20px 60px;
+            text-align: center;
+        }
+
+        .breadcrumb {
+            max-width: 900px;
+            margin: 0 auto 20px;
+            text-align: left;
+        }
+
+        .breadcrumb a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: white;
+        }
+
+        .article-hero .eyebrow {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+        }
+
+        .article-hero h1 {
+            font-size: 40px;
+            max-width: 850px;
+            margin: 0 auto;
+            line-height: 1.25;
+        }
+
+        .article-hero .subtitle {
+            margin-top: 18px;
+            font-size: 17px;
+            color: rgba(255,255,255,0.85);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== ARTICLE BODY ===== */
+        .article-wrap {
+            max-width: 900px;
+            margin: -30px auto 80px;
+            padding: 0 20px;
+        }
+
+        .article-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 50px 55px;
+            box-shadow: 0 10px 40px rgba(45, 27, 105, 0.08);
+        }
+
+        .article-card h1 {
+            color: var(--primary);
+            font-size: 30px;
+            margin: 40px 0 20px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .article-card h1:first-child {
+            margin-top: 0;
+        }
+
+        .article-card h2 {
+            color: var(--primary);
+            font-size: 24px;
+            margin: 40px 0 18px;
+        }
+
+        .article-card h3 {
+            color: var(--secondary);
+            font-size: 19px;
+            margin: 28px 0 12px;
+        }
+
+        .article-card h4 {
+            color: var(--secondary);
+            font-size: 16px;
+            margin: 22px 0 10px;
+        }
+
+        .article-card p {
+            color: var(--text-dark);
+            font-size: 16px;
+            line-height: 1.85;
+            margin-bottom: 18px;
+        }
+
+        .article-card ul,
+        .article-card ol {
+            margin: 0 0 20px 24px;
+            color: var(--text-dark);
+            font-size: 16px;
+            line-height: 1.85;
+        }
+
+        .article-card li {
+            margin-bottom: 8px;
+        }
+
+        .article-card strong {
+            color: var(--primary);
+        }
+
+        .article-card a {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .article-card hr {
+            border: none;
+            border-top: 1px solid var(--border-light);
+            margin: 36px 0;
+        }
+
+        .article-card blockquote {
+            border-left: 4px solid var(--accent);
+            background: var(--light-bg);
+            padding: 18px 24px;
+            margin: 24px 0;
+            border-radius: 6px;
+            color: var(--text-dark);
+            font-style: italic;
+        }
+
+        .article-card blockquote p:last-child {
+            margin-bottom: 0;
+        }
+
+        .article-card code {
+            background: var(--light-bg);
+            color: var(--secondary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        }
+
+        .article-card pre {
+            background: var(--light-bg);
+            padding: 18px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .article-card pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .article-card table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 14px;
+        }
+
+        .article-card th {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: left;
+            padding: 12px 16px;
+        }
+
+        .article-card th:first-child {
+            border-top-left-radius: 8px;
+        }
+
+        .article-card th:last-child {
+            border-top-right-radius: 8px;
+        }
+
+        .article-card td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-dark);
+        }
+
+        .article-card tr:nth-child(even) td {
+            background: var(--light-bg);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 40px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .back-link:hover {
+            gap: 12px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-light);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 15px;
+                font-size: 12px;
+            }
+
+            .article-hero h1 {
+                font-size: 28px;
+            }
+
+            .article-card {
+                padding: 32px 22px;
+            }
+
+            .article-card table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">NAM</a>
+            <ul>
+                <li><a href="index.html#hero">Home</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#artifacts">Artifacts</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ARTICLE HERO -->
+    <section class="article-hero">
+        <div class="breadcrumb">
+            <a href="index.html#artifacts">&larr; Back to Portfolio</a>
+        </div>
+        <span class="eyebrow">Artifact 5</span>
+        <h1>From Restoration to Responsibility</h1>
+        <p class="subtitle">A framework for ethical, transformational AI leadership — spanning biblical models of restoration, a real AI security incident analysis, and a personal responsible-AI roadmap.</p>
+    </section>
+
+    <!-- ARTICLE BODY -->
+    <div class="article-wrap">
+        <article class="article-card">
+            <hr />
+            <h2 id="1-title">1. Title</h2>
+            <p><strong>Artifact 5: From Restoration to Responsibility — A Framework for Ethical, Transformational AI Leadership</strong></p>
+            <hr />
+            <h2 id="2-objective">2. Objective</h2>
+            <p>To integrate biblical models of transformation, real-world AI security and ethics analysis, and a personal leadership framework into a single, coherent view of what it means to lead responsibly in AI/ML. This artifact demonstrates the ability to move between three registers — theological reflection, technical/ethical case analysis, and forward-looking personal strategy — and show how each shapes the others.</p>
+            <hr />
+            <h2 id="3-process">3. Process</h2>
+            <h3 id="phase-a-transformation-as-a-leadership-model">Phase A: Transformation as a Leadership Model</h3>
+            <ul>
+            <li><strong>Biblical Grounding:</strong> Examined Peter's denial and restoration (Matthew 26:33, 26:69–75; John 21:15–19) as a model for leadership that is built <em>through</em> failure rather than despite it.</li>
+            <li><strong>Personal Application:</strong> Connected this model to a real career inflection point — recognizing a mismatch between a stable, respected technical track and a deeper sense of purpose — and reframed an active job search and graduate study as intentional "recommissioning" rather than a setback.</li>
+            <li><strong>Leadership Principle Extracted:</strong> Restoration is not a return to a prior state; it is a deeper, more humble redirection toward purpose — a principle directly applied to how transformation is now approached in a management context.</li>
+            </ul>
+            <h3 id="phase-b-critical-analysis-of-a-real-ai-securityethics-incident">Phase B: Critical Analysis of a Real AI Security/Ethics Incident</h3>
+            <ul>
+            <li><strong>Case Study:</strong> Analyzed <em>RoguePilot</em>, a 2026 prompt-injection vulnerability in GitHub Copilot (disclosed by Orca Security) that allowed an attacker to exfiltrate a developer's private repository access token via hidden instructions in a GitHub Issue.</li>
+            <li><strong>Root-Cause Analysis:</strong> Identified three distinct failure modes — the inability of an AI system to separate untrusted data from trusted commands, a safety guardrail narrow enough to be bypassed via a symbolic-link trick, and a total lack of visibility into the agent's actions before harm occurred.</li>
+            <li><strong>Reframed Assumption:</strong> Moved from an initial assumption that AI incidents stem from an AI "misbehaving" to a more accurate model: most incidents occur because an AI system does exactly what it was built to do, without the surrounding system providing verification, guardrail robustness, or human checkpoints.</li>
+            </ul>
+            <h3 id="phase-c-personal-leadership-framework-for-responsible-ai">Phase C: Personal Leadership Framework for Responsible AI</h3>
+            <ul>
+            <li><strong>Mission Statement:</strong> Authored a personal mission centered on responsible AI/ML development that generates measurable value while holding to ethical standards, transparency, and human-centered design.</li>
+            <li><strong>Core Values:</strong> Codified five operating values — Ethical Integrity, Transparency &amp; Accountability, Human-Centered Design, Continuous Learning, and Inclusivity &amp; Equity.</li>
+            <li><strong>Measurable Roadmap:</strong> Set 12–24 month objectives spanning AI governance expertise, technical depth in AI/ML safety, mentorship, and a leadership role explicitly tied to ethical AI oversight, backed by short-, mid-, and long-term action plans and a defined feedback/adaptation cycle.</li>
+            </ul>
+            <hr />
+            <h2 id="4-tools-technologies-used">4. Tools &amp; Technologies Used</h2>
+            <ul>
+            <li><strong>Case Research &amp; Analysis:</strong> Primary-source security disclosures (Orca Security, The Hacker News, Cyber Security News) on prompt-injection and agentic AI vulnerabilities.</li>
+            <li><strong>Frameworks Referenced:</strong> EU AI Act, emerging U.S. AI regulatory guidance, responsible-AI governance and maturity models.</li>
+            <li><strong>Leadership &amp; Reflection Tools:</strong> Personal mission/values framework design, quarterly self-assessment and 360-degree feedback structures, biblical case-study analysis.</li>
+            <li><strong>Documentation &amp; Portfolio Hosting:</strong> Markdown, Git/GitHub Pages, APA-formatted academic writing.</li>
+            </ul>
+            <hr />
+            <h2 id="5-value-proposition">5. Value Proposition</h2>
+            <ul>
+            <li><strong>Judgment Under Failure:</strong> Demonstrates the ability to treat setbacks — whether personal career doubt or a public AI security failure — as data to build better systems and better leadership, not as events to minimize or hide.</li>
+            <li><strong>Security-Literate Leadership:</strong> Shows fluency in <em>why</em> modern AI agents fail (data/command confusion, narrow guardrails, lack of visibility) — directly relevant to leading teams that build or deploy LLM-based tools and agents responsibly.</li>
+            <li><strong>Accountability by Design:</strong> Converts values into measurable, time-bound commitments (certifications, mentoring, governance participation) rather than leaving ethical intent abstract.</li>
+            </ul>
+            <hr />
+            <h2 id="6-clear-professional-evidence">6. Clear &amp; Professional Evidence</h2>
+            <h3 id="a-leadership-principle-from-biblical-case-study">A. Leadership Principle (from Biblical Case Study)</h3>
+            <blockquote>
+            <p><em>"Restoration isn't about getting back to the way things were, it's about digging deeper into purpose with humility."</em></p>
+            </blockquote>
+            <h3 id="b-roguepilot-incident-failure-modes-remediation">B. RoguePilot Incident — Failure Modes &amp; Remediation</h3>
+            <table>
+            <thead>
+            <tr>
+            <th style="text-align: left;">Failure Mode</th>
+            <th style="text-align: left;">Why It Happened</th>
+            <th style="text-align: left;">Recommended Fix</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            <td style="text-align: left;"><strong>Data/command confusion</strong></td>
+            <td style="text-align: left;">AI reads all text as language; can't distinguish trusted instructions from untrusted content</td>
+            <td style="text-align: left;">Treat external content (issues, files, comments) as reference data only, never as directly actionable commands</td>
+            </tr>
+            <tr>
+            <td style="text-align: left;"><strong>Narrow guardrails</strong></td>
+            <td style="text-align: left;">Safety check blocked file paths but not symbolic links pointing outside the sandbox</td>
+            <td style="text-align: left;">Red-team guardrails against indirect/disguised bypasses before release, not just obvious ones</td>
+            </tr>
+            <tr>
+            <td style="text-align: left;"><strong>No visibility into agent actions</strong></td>
+            <td style="text-align: left;">Agent ran silently in the background with no action log or approval step</td>
+            <td style="text-align: left;">Require a visible action log and human checkpoint before any action touching secrets or leaving the workspace</td>
+            </tr>
+            </tbody>
+            </table>
+            <h3 id="c-personal-mission-statement">C. Personal Mission Statement</h3>
+            <blockquote>
+            <p><em>"To drive responsible development and implementation of AI/ML technologies which generate measurable commercial value while adhering to high ethical standards, openness, and human-focused design principles."</em></p>
+            </blockquote>
+            <h3 id="d-1224-month-objectives-snapshot">D. 12–24 Month Objectives Snapshot</h3>
+            <ol>
+            <li><strong>Governance Expertise:</strong> Deepen knowledge of the EU AI Act and emerging U.S. rules; earn two AI governance/ethics certifications.</li>
+            <li><strong>Technical Safety Depth:</strong> Build hands-on skill in model interpretability, bias detection, and adversarial evaluation; complete the MS in AI &amp; Data Analytics.</li>
+            <li><strong>Mentorship &amp; Culture:</strong> Mentor at least three rising technologists in responsible AI practice; run monthly ethics discussions.</li>
+            <li><strong>Role Alignment:</strong> Secure a leadership role with explicit responsibility for AI governance and ethics within 18–24 months.</li>
+            </ol>
+            <hr />
+            <h2 id="7-relevance-to-course-objectives-critical-reflection">7. Relevance to Course Objectives &amp; Critical Reflection</h2>
+            <h3 id="alignment-with-course-learning-outcomes">Alignment with Course Learning Outcomes</h3>
+            <ul>
+            <li><strong>Outcome 1 (Transformational Leadership):</strong> Applied a biblical model of failure-and-restoration to real professional transformation, reframing setbacks as the foundation of credible leadership rather than a threat to it.</li>
+            <li><strong>Outcome 2 (AI Ethics &amp; Incident Analysis):</strong> Conducted a structured critical analysis of a real, recent AI security incident, tracing root causes to systemic and design failures rather than "rogue AI," and proposed concrete remediations.</li>
+            <li><strong>Outcome 3 (Personal Leadership Framework):</strong> Synthesized values, mission, and measurable objectives into a living framework for leading responsible AI/ML work, with built-in feedback and adaptation mechanisms.</li>
+            </ul>
+            <h3 id="critical-reflection">Critical Reflection</h3>
+            <p>The through-line across all three pieces is that responsible leadership — whether recovering from personal doubt, analyzing why an AI system was exploited, or setting a five-year ethical trajectory — depends less on avoiding failure and more on building the visibility, humility, and structure to catch and correct it early. That is the standard this artifact sets for future AI/ML leadership practice.</p>
+            <h2 id="_1"></h2>
+            <a href="index.html#artifacts" class="back-link">&larr; Back to all Artifacts</a>
+        </article>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2024 Naveed Ahmed Mohammed. Built with care. Hosted on GitHub Pages.</p>
+    </footer>
+</body>
+</html>
